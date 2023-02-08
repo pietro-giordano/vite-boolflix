@@ -10,6 +10,7 @@ export default {
 <template>
 
       <ul>
+            <li><img :src="`https://image.tmdb.org/t/p/w342${tv.backdrop_path}`" :alt="tv.name"></li>
             <li>Titolo: {{ tv.name }}</li>
             <li>Titolo originale: {{ tv.original_name }}</li>
             <li>Lingua: {{ tv.original_language }} <span :class="`fi fi-${tv.original_language}`"></span></li>
