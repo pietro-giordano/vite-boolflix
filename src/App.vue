@@ -17,7 +17,7 @@ export default {
       },
       methods: {
 
-            getDatabase() {
+            getMovies() {
 
                   console.log('search premuto')
 
@@ -29,8 +29,26 @@ export default {
                               }
                         })
                         .then((response) => {
-                              this.store.results = response.data.results;
-                              console.log(this.store.results)
+                              this.store.moviesResults = response.data.results;
+                              console.log(this.store.moviesResults)
+                        })
+
+            },
+
+            getSeries() {
+
+                  console.log('search premuto')
+
+                  axios
+                        .get('https://api.themoviedb.org/3/search/tv', {
+                              params: {
+                                    api_key: this.store.api_key,
+                                    query: this.store.searchValue
+                              }
+                        })
+                        .then((response) => {
+                              this.store.seriesResults = response.data.results;
+                              console.log(this.store.seriesResults)
                         })
 
             }
@@ -40,7 +58,7 @@ export default {
 </script>
 
 <template>
-      <AppHeader @search="getDatabase()" />
+      <AppHeader @search="getMovies(), getSeries()" />
 
       <AppMain />
 </template>
