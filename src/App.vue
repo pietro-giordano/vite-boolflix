@@ -17,39 +17,33 @@ export default {
       },
       methods: {
 
-            getMovies() {
-
-                  console.log('search premuto')
+            getDatabase(endpoint) {
 
                   axios
-                        .get('https://api.themoviedb.org/3/search/movie', {
+                        .get('https://api.themoviedb.org/3/search/' + endpoint, {
                               params: {
                                     api_key: this.store.api_key,
-                                    query: this.store.searchValue
+                                    query: this.store.searchValue,
+                                    language: 'it-IT'
                               }
                         })
                         .then((response) => {
-                              this.store.moviesResults = response.data.results;
-                              console.log(this.store.moviesResults)
+
+                              if (endpoint == 'movie') {
+                                    this.store.moviesResults = response.data.results;
+                                    console.log(this.store.moviesResults);
+                              } else {
+                                    this.store.seriesResults = response.data.results;
+                                    console.log(this.store.seriesResults);
+                              }
                         })
 
             },
 
-            getSeries() {
+            searchEvent() {
 
-                  console.log('search premuto')
-
-                  axios
-                        .get('https://api.themoviedb.org/3/search/tv', {
-                              params: {
-                                    api_key: this.store.api_key,
-                                    query: this.store.searchValue
-                              }
-                        })
-                        .then((response) => {
-                              this.store.seriesResults = response.data.results;
-                              console.log(this.store.seriesResults)
-                        })
+                  this.getDatabase('movie');
+                  this.getDatabase('tv');
 
             }
 
@@ -58,7 +52,7 @@ export default {
 </script>
 
 <template>
-      <AppHeader @search="getMovies(), getSeries()" />
+      <AppHeader @search="searchEvent()" />
 
       <AppMain />
 </template>
