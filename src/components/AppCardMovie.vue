@@ -7,7 +7,8 @@ export default {
       data() {
             return {
                   stars: [],
-                  emptyStars: []
+                  emptyStars: [],
+                  overlay: false
             }
       },
       computed: {
@@ -31,7 +32,7 @@ export default {
                         return new URL(`../assets/not-found-image.jpg`, import.meta.url).href;
                   }
 
-                  return `https://image.tmdb.org/t/p/w342` + this.movie.backdrop_path;
+                  return `https://image.tmdb.org/t/p/w342` + this.movie.poster_path;
             },
       }
 }
@@ -39,16 +40,19 @@ export default {
 
 <template>
 
-      <ul>
-            <li><img :src="imgPath" :alt="movie.title"></li>
-            <li>Titolo: {{ movie.title }}</li>
-            <li>Titolo originale: {{ movie.original_title }}</li>
-            <li>Lingua: {{ movie.original_language }} <span :class="`fi fi-${movie.original_language}`"></span></li>
-            <li>Media voto: {{ movie.vote_average }} {{ starsFull }} {{ starsEmpty }}
-                  <font-awesome-icon v-for="star in stars" icon="fa-solid fa-star" />
-                  <font-awesome-icon v-for="star in emptyStars" icon="fa-regular fa-star" />
-            </li>
-      </ul>
+      <div class="poster">
+            <img :src="imgPath" :alt="movie.title" @mouseover="overlay = true" @mouseleave="overlay = false">
+
+            <div class="overlay" v-show="overlay">
+                  <h5>Titolo: {{ movie.title }}</h5>
+                  <p>Titolo originale: {{ movie.original_title }}</p>
+                  <p>Lingua: <span :class="`fi fi-${movie.original_language}`"></span></p>
+                  <p>Voto: {{ movie.vote_average }} {{ starsFull }} {{ starsEmpty }}
+                        <font-awesome-icon v-for="star in stars" icon="fa-solid fa-star" />
+                        <font-awesome-icon v-for="star in emptyStars" icon="fa-regular fa-star" />
+                  </p>
+            </div>
+      </div>
 
 </template>
 

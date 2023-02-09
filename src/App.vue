@@ -28,6 +28,8 @@ export default {
                               }
                         })
                         .then((response) => {
+                              this.store.moviesVisibility = true;
+                              this.store.seriesVisibility = true;
 
                               if (endpoint == 'movie') {
                                     this.store.moviesResults = response.data.results;

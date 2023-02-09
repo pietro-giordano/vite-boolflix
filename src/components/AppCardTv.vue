@@ -31,7 +31,7 @@ export default {
                         return new URL(`../assets/not-found-image.jpg`, import.meta.url).href;
                   }
 
-                  return `https://image.tmdb.org/t/p/w342` + this.tv.backdrop_path;
+                  return `https://image.tmdb.org/t/p/w342` + this.tv.poster_path;
             },
 
       }
