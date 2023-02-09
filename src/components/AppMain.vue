@@ -42,5 +42,8 @@ export default {
 </template>
 
 <style lang="scss">
-
+main {
+      background-color: gray;
+      height: calc(100vh - 100px);
+}
 </style>
