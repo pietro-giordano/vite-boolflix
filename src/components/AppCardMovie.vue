@@ -11,6 +11,10 @@ export default {
             },
 
             imgPath() {
+                  if (this.movie.backdrop_path == null) {
+                        return new URL(`../assets/not-found-image.jpg`, import.meta.url).href;
+                  }
+
                   return `https://image.tmdb.org/t/p/w342` + this.movie.backdrop_path;
             },
 

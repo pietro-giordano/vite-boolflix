@@ -12,7 +12,7 @@ export default {
 
             imgPath() {
                   if (this.tv.backdrop_path == null) {
-                        return "../assets/not-found-image.jpg";
+                        return new URL(`../assets/not-found-image.jpg`, import.meta.url).href;
                   }
 
                   return `https://image.tmdb.org/t/p/w342` + this.tv.backdrop_path;
@@ -25,7 +25,7 @@ export default {
 <template>
 
       <ul>
-            <li><img :src="`../assets/not-found-image.jpg`" :alt="tv.name"></li>
+            <li><img :src="imgPath" :alt="tv.name"></li>
             <li>Titolo: {{ tv.name }}</li>
             <li>Titolo originale: {{ tv.original_name }}</li>
             <li>Lingua: {{ tv.original_language }} <span :class="`fi fi-${tv.original_language}`"></span></li>
