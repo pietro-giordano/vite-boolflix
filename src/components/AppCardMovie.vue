@@ -14,9 +14,9 @@ export default {
                   return `https://image.tmdb.org/t/p/w342` + this.movie.backdrop_path;
             },
 
-            flag() {
-                  return `fi fi-` + this.movie.original_language;
-            }
+            // flag() {
+            //       return `fi fi-` + this.movie.original_language;
+            // }
 
       }
 }
@@ -25,10 +25,12 @@ export default {
 <template>
 
       <ul>
+            <li><font-awesome-icon icon="fa-solid fa-star" /></li>
+            <li><font-awesome-icon icon="fa-regular fa-star" /></li>
             <li><img :src="imgPath" :alt="movie.title"></li>
             <li>Titolo: {{ movie.title }}</li>
             <li>Titolo originale: {{ movie.original_title }}</li>
-            <li>Lingua: {{ movie.original_language }} <span :class="flag"></span></li>
+            <li>Lingua: {{ movie.original_language }} <span :class="`fi fi-${movie.original_language}`"></span></li>
             <li>Media voto: {{ starsVote }}</li>
       </ul>
 

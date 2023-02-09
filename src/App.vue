@@ -22,7 +22,7 @@ export default {
                   axios
                         .get('https://api.themoviedb.org/3/search/' + endpoint, {
                               params: {
-                                    api_key: this.store.api_key,
+                                    api_key: '36cc4da84d9ffde2d7f4c2ba9f8a6a4f',
                                     query: this.store.searchValue,
                                     language: 'it-IT'
                               }
