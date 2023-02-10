@@ -20,12 +20,15 @@ export default {
             },
 
             imgPath() {
-                  if (this.content.backdrop_path == null) {
+                  if (this.content.poster_path == null) {
                         return new URL(`../assets/not-found-image.jpg`, import.meta.url).href;
                   }
-
                   return `https://image.tmdb.org/t/p/w342` + this.content.poster_path;
             },
+
+            shortOverview() {
+                  return this.content.overview.slice(0, 400) + '...';
+            }
       }
 }
 </script>
@@ -43,7 +46,7 @@ export default {
                         <font-awesome-icon v-for="n in starsFull" icon="fa-solid fa-star" />
                         <font-awesome-icon v-for="n in starsEmpty" icon="fa-regular fa-star" />
                   </p>
-                  <p>Overview: {{ content.overview }}</p>
+                  <p>Overview: {{ shortOverview }}</p>
             </div>
       </div>
 

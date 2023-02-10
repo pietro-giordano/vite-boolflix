@@ -14,12 +14,12 @@ export default {
       },
       methods: {
 
-            scrollRight(element) {
-                  document.getElementById(element).scrollLeft += 200;
+            scrollRight() {
+                  this.$refs.showcase.scrollLeft += 500;
             },
 
-            scrollLeft(element) {
-                  document.getElementById(element).scrollLeft -= 200;
+            scrollLeft() {
+                  this.$refs.showcase.scrollLeft -= 500;
             },
       }
 }
@@ -27,32 +27,17 @@ export default {
 
 <template>
       <main>
-            <h2 v-if="store.moviesVisibility">Film trovati: {{ store.moviesResults.length }}</h2>
             <div class="position-relative">
-                  <div class="showcase" id="movieShowcase">
-                        <div class="previous" @click="scrollLeft('movieShowcase')">
+                  <div class="showcase" ref="showcase">
+                        <div class="previous" @click="scrollLeft">
                               <font-awesome-icon icon="fa-solid fa-chevron-left" size="xl" />
                         </div>
 
-                        <div class="next" @click="scrollRight('movieShowcase')">
+                        <div class="next" @click="scrollRight">
                               <font-awesome-icon icon="fa-solid fa-chevron-right" size="xl" />
                         </div>
 
                         <AppCard :content="movie" v-for="movie in store.moviesResults" />
-                  </div>
-            </div>
-
-            <h2 v-if="store.seriesVisibility">Serie trovate: {{ store.seriesResults.length }}</h2>
-            <div class="position-relative">
-                  <div class="showcase" id="serieShowcase">
-                        <div class="previous" @click="scrollLeft('serieShowcase')">
-                              <font-awesome-icon icon="fa-solid fa-chevron-left" size="xl" />
-                        </div>
-
-                        <div class="next" @click="scrollRight('serieShowcase')">
-                              <font-awesome-icon icon="fa-solid fa-chevron-right" size="xl" />
-                        </div>
-
                         <AppCard :content="serie" v-for="serie in store.seriesResults" />
                   </div>
             </div>
@@ -65,17 +50,18 @@ main {
       height: calc(100vh - 100px);
       color: white;
       overflow: auto;
-      padding: 10px 0;
+      padding: 30px 0;
 
       h2 {
             padding-left: 20px;
       }
 
       .showcase {
-            overflow-x: hidden;
+            overflow: hidden;
             white-space: nowrap;
             margin: 10px 0 20px;
             padding-left: 20px;
+            scroll-behavior: smooth;
 
             &:hover .previous,
             &:hover .next {
