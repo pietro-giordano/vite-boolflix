@@ -1,55 +1,57 @@
 <script>
 import { store } from '../store';
-import AppCardMovie from './AppCardMovie.vue';
-import AppCardTv from './AppCardTv.vue';
+import AppCard from './AppCard.vue';
 
 export default {
       name: 'AppMain',
       components: {
-            AppCardMovie,
-            AppCardTv
+            AppCard
       },
       data() {
             return {
                   store
             }
+      },
+      methods: {
+
+            scrollRight() {
+                  this.scrollLeft += 50;
+            }
+
       }
 }
 </script>
 
 <template>
-
-      <main class="px-5">
-            <div>
+      <main>
+            <div class="showcase">
                   <h2 v-if="store.moviesVisibility">Film trovati: {{ store.moviesResults.length }}</h2>
 
-                  <div class="d-flex flex-wrap">
-                        <AppCardMovie :movie="movie" v-for="movie in store.moviesResults" />
+                  <div class="previous" @click="scrollRight">
+                        <font-awesome-icon icon="fa-solid fa-chevron-left" size="xl" />
                   </div>
+
+                  <div class="next">
+                        <font-awesome-icon icon="fa-solid fa-chevron-right" size="xl" />
+                  </div>
+
+                  <AppCard :content="movie" v-for="movie in store.moviesResults" />
             </div>
 
-            <!-- <ul v-for="movie in store.moviesResults">
-                  <li>movie</li>
-                  <li>Titolo: {{ movie.title }}</li>
-                  <li>Titolo originale: {{ movie.original_title }}</li>
-                  <li>Lingua: {{ movie.original_language }}</li>
-                  <li>Media voto: {{ movie.vote_average }}</li>
-            </ul> -->
-
-            <div>
+            <div class="showcase">
                   <h2 v-if="store.seriesVisibility">Serie trovate: {{ store.seriesResults.length }}</h2>
 
-                  <AppCardTv :tv="serie" v-for="serie in store.seriesResults" />
-            </div>
-            <!-- <ul v-for="tv in store.seriesResults">
-                  <li>serie</li>
-                  <li>Titolo: {{ tv.name }}</li>
-                  <li>Titolo originale: {{ tv.original_name }}</li>
-                  <li>Lingua: {{ tv.original_language }}</li>
-                  <li>Media voto: {{ tv.vote_average }}</li>
-            </ul> -->
-      </main>
+                  <div class="previous">
+                        <font-awesome-icon icon="fa-solid fa-chevron-left" size="xl" />
+                  </div>
 
+                  <div class="next">
+                        <font-awesome-icon icon="fa-solid fa-chevron-right" size="xl" />
+                  </div>
+
+                  <AppCard :content="serie" v-for="serie in store.seriesResults" />
+            </div>
+      </main>
 </template>
 
 <style lang="scss">
@@ -59,29 +61,73 @@ main {
       color: white;
       overflow: auto;
 
-      .poster {
-            width: 342px;
-            height: 510px;
+      .showcase {
+            overflow-x: auto;
+            white-space: nowrap;
+            margin: 10px 0 20px 20px;
             position: relative;
-            border: 2px solid white;
 
-            img {
-                  width: 100%;
-                  height: 100%;
+            &:hover .previous,
+            &:hover .next {
+                  display: block;
             }
 
-            .overlay {
-                  // display: none;
+            .previous,
+            .next {
+                  display: none;
+                  width: 50px;
+                  height: 50px;
+                  border-radius: 50%;
+                  background-color: rgba(255, 255, 255, 0.7);
+                  color: black;
                   position: absolute;
-                  top: 0;
-                  left: 0;
-                  background-color: rgba($color: #000000, $alpha: 0.8);
-                  width: 100%;
-                  height: 100%;
-                  padding: 20% 10px;
+                  z-index: 2;
+                  top: 50%;
+                  text-align: center;
+                  line-height: 50px;
+                  cursor: pointer;
+            }
 
-                  p {
-                        margin-bottom: 0;
+            .previous {
+                  left: 2vw;
+            }
+
+            .next {
+                  right: 2vw;
+            }
+
+            .poster {
+                  width: 342px;
+                  height: 510px;
+                  position: relative;
+                  border: 2px solid white;
+                  display: inline-block;
+                  margin-right: 30px;
+                  white-space: pre-wrap;
+
+                  img {
+                        width: 100%;
+                        height: 100%;
+
+                  }
+
+                  &:hover .overlay {
+                        display: block;
+                  }
+
+                  .overlay {
+                        display: none;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        background-color: rgba($color: #000000, $alpha: 0.8);
+                        width: 100%;
+                        height: 100%;
+                        padding: 20% 10px;
+
+                        p {
+                              margin-bottom: 0;
+                        }
                   }
             }
       }
