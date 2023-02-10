@@ -14,58 +14,68 @@ export default {
       },
       methods: {
 
-            scrollRight() {
-                  this.scrollLeft += 50;
-            }
+            scrollRight(element) {
+                  document.getElementById(element).scrollLeft += 200;
+            },
 
+            scrollLeft(element) {
+                  document.getElementById(element).scrollLeft -= 200;
+            },
       }
 }
 </script>
 
 <template>
       <main>
-            <div class="showcase">
-                  <h2 v-if="store.moviesVisibility">Film trovati: {{ store.moviesResults.length }}</h2>
+            <h2 v-if="store.moviesVisibility">Film trovati: {{ store.moviesResults.length }}</h2>
+            <div class="position-relative">
+                  <div class="showcase" id="movieShowcase">
+                        <div class="previous" @click="scrollLeft('movieShowcase')">
+                              <font-awesome-icon icon="fa-solid fa-chevron-left" size="xl" />
+                        </div>
 
-                  <div class="previous" @click="scrollRight">
-                        <font-awesome-icon icon="fa-solid fa-chevron-left" size="xl" />
+                        <div class="next" @click="scrollRight('movieShowcase')">
+                              <font-awesome-icon icon="fa-solid fa-chevron-right" size="xl" />
+                        </div>
+
+                        <AppCard :content="movie" v-for="movie in store.moviesResults" />
                   </div>
-
-                  <div class="next">
-                        <font-awesome-icon icon="fa-solid fa-chevron-right" size="xl" />
-                  </div>
-
-                  <AppCard :content="movie" v-for="movie in store.moviesResults" />
             </div>
 
-            <div class="showcase">
-                  <h2 v-if="store.seriesVisibility">Serie trovate: {{ store.seriesResults.length }}</h2>
+            <h2 v-if="store.seriesVisibility">Serie trovate: {{ store.seriesResults.length }}</h2>
+            <div class="position-relative">
+                  <div class="showcase" id="serieShowcase">
+                        <div class="previous" @click="scrollLeft('serieShowcase')">
+                              <font-awesome-icon icon="fa-solid fa-chevron-left" size="xl" />
+                        </div>
 
-                  <div class="previous">
-                        <font-awesome-icon icon="fa-solid fa-chevron-left" size="xl" />
+                        <div class="next" @click="scrollRight('serieShowcase')">
+                              <font-awesome-icon icon="fa-solid fa-chevron-right" size="xl" />
+                        </div>
+
+                        <AppCard :content="serie" v-for="serie in store.seriesResults" />
                   </div>
-
-                  <div class="next">
-                        <font-awesome-icon icon="fa-solid fa-chevron-right" size="xl" />
-                  </div>
-
-                  <AppCard :content="serie" v-for="serie in store.seriesResults" />
             </div>
       </main>
 </template>
 
 <style lang="scss">
 main {
-      background-color: gray;
+      background-color: black;
       height: calc(100vh - 100px);
       color: white;
       overflow: auto;
+      padding: 10px 0;
+
+      h2 {
+            padding-left: 20px;
+      }
 
       .showcase {
-            overflow-x: auto;
+            overflow-x: hidden;
             white-space: nowrap;
-            margin: 10px 0 20px 20px;
-            position: relative;
+            margin: 10px 0 20px;
+            padding-left: 20px;
 
             &:hover .previous,
             &:hover .next {
@@ -83,6 +93,7 @@ main {
                   position: absolute;
                   z-index: 2;
                   top: 50%;
+                  transform: translateY(-50%);
                   text-align: center;
                   line-height: 50px;
                   cursor: pointer;
@@ -98,7 +109,7 @@ main {
 
             .poster {
                   width: 342px;
-                  height: 510px;
+                  height: 506px;
                   position: relative;
                   border: 2px solid white;
                   display: inline-block;
@@ -108,7 +119,6 @@ main {
                   img {
                         width: 100%;
                         height: 100%;
-
                   }
 
                   &:hover .overlay {
