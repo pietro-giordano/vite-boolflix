@@ -15,11 +15,11 @@ export default {
       methods: {
 
             scrollRight() {
-                  this.$refs.showcase.scrollLeft += 500;
+                  this.$refs.showcase.scrollLeft += 745;
             },
 
             scrollLeft() {
-                  this.$refs.showcase.scrollLeft -= 500;
+                  this.$refs.showcase.scrollLeft -= 745;
             },
       }
 }
@@ -101,6 +101,7 @@ main {
                   display: inline-block;
                   margin-right: 30px;
                   white-space: pre-wrap;
+                  // overflow: auto;
 
                   &:hover {
                         border: 2px solid #D81F26;
@@ -125,8 +126,22 @@ main {
                         height: 100%;
                         padding: 5px 10px;
 
+                        h5 {
+                              color: #D81F26;
+
+                              >* {
+                                    color: white;
+                              }
+                        }
+
                         p {
                               margin-bottom: 0;
+                              color: #D81F26;
+
+                              >* {
+                                    font-size: smaller;
+                                    color: white;
+                              }
                         }
 
                         button {

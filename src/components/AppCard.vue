@@ -10,7 +10,9 @@ export default {
       data() {
             return {
                   store,
-                  credits: []
+                  credits: [],
+                  moreInfoVisibility: false,
+                  buttonInfo: true
             }
       },
       computed: {
@@ -37,9 +39,10 @@ export default {
       methods: {
 
             getCredits() {
-                  this.credits = []
-
+                  this.moreInfoVisibility = true;
+                  this.buttonInfo = false;
                   let endpoint;
+
                   if (this.content.hasOwnProperty('title')) {
                         endpoint = 'movie';
                   } else {
@@ -58,6 +61,11 @@ export default {
                               console.log(this.credits);
                         })
             },
+
+            lessInfo() {
+                  this.moreInfoVisibility = false;
+                  this.buttonInfo = true;
+            }
       }
 }
 </script>
@@ -68,18 +76,19 @@ export default {
             <img :src="imgPath" :alt="content.title">
 
             <div class="overlay">
-                  <h5>Titolo: {{ content.title || content.name }}</h5>
-                  <p>Titolo originale: {{ content.original_title || content.original_name }}</p>
+                  <h5>Titolo: <span>{{ content.title || content.name }}</span></h5>
+                  <p>Titolo originale: <span>{{ content.original_title || content.original_name }}</span></p>
                   <p>Lingua: <span :class="`fi fi-${content.original_language}`"></span></p>
                   <p>Voto:
                         <font-awesome-icon v-for="n in starsFull" icon="fa-solid fa-star" />
                         <font-awesome-icon v-for="n in starsEmpty" icon="fa-regular fa-star" />
                   </p>
-                  <p>Overview: {{ shortOverview }}</p>
-                  <button @click="getCredits">More info...</button>
-                  <div>
+                  <p>Overview: <span>{{ shortOverview }}</span></p>
+                  <button v-if="buttonInfo" @click="getCredits">More info...</button>
+                  <button v-if="moreInfoVisibility" @click="lessInfo">Less info...</button>
+                  <div v-if="moreInfoVisibility">
                         <p>Cast:</p>
-                        <p v-for="actor in credits">{{ actor.name }}</p>
+                        <p v-for="actor in credits"><span>{{ actor.name }}</span></p>
                   </div>
             </div>
       </div>
