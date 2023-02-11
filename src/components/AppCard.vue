@@ -1,4 +1,7 @@
 <script>
+import { store } from '../store';
+import axios from 'axios';
+
 export default {
       name: 'AppCard',
       props: {
@@ -6,7 +9,8 @@ export default {
       },
       data() {
             return {
-                  overlay: false
+                  store,
+                  credits: []
             }
       },
       computed: {
@@ -27,8 +31,33 @@ export default {
             },
 
             shortOverview() {
-                  return this.content.overview.slice(0, 400) + '...';
+                  return this.content.overview.slice(0, 200) + '...';
             }
+      },
+      methods: {
+
+            getCredits() {
+                  this.credits = []
+
+                  let endpoint;
+                  if (this.content.hasOwnProperty('title')) {
+                        endpoint = 'movie';
+                  } else {
+                        endpoint = 'tv';
+                  }
+
+                  axios
+                        .get('https://api.themoviedb.org/3/' + endpoint + '/' + this.content.id + '/credits', {
+                              params: {
+                                    api_key: '36cc4da84d9ffde2d7f4c2ba9f8a6a4f',
+                                    language: 'it-IT'
+                              }
+                        })
+                        .then((response) => {
+                              this.credits = response.data.cast.slice(0, 5);
+                              console.log(this.credits);
+                        })
+            },
       }
 }
 </script>
@@ -47,6 +76,11 @@ export default {
                         <font-awesome-icon v-for="n in starsEmpty" icon="fa-regular fa-star" />
                   </p>
                   <p>Overview: {{ shortOverview }}</p>
+                  <button @click="getCredits">More info...</button>
+                  <div>
+                        <p>Cast:</p>
+                        <p v-for="actor in credits">{{ actor.name }}</p>
+                  </div>
             </div>
       </div>
 

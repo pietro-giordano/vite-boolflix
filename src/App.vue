@@ -18,7 +18,6 @@ export default {
       methods: {
 
             getDatabase(endpoint) {
-
                   axios
                         .get('https://api.themoviedb.org/3/search/' + endpoint, {
                               params: {
@@ -28,9 +27,6 @@ export default {
                               }
                         })
                         .then((response) => {
-                              this.store.moviesVisibility = true;
-                              this.store.seriesVisibility = true;
-
                               if (endpoint == 'movie') {
                                     this.store.moviesResults = response.data.results;
                                     console.log(this.store.moviesResults);
@@ -39,16 +35,12 @@ export default {
                                     console.log(this.store.seriesResults);
                               }
                         })
-
             },
 
             searchEvent() {
-
                   this.getDatabase('movie');
                   this.getDatabase('tv');
-
-            }
-
+            },
       }
 }
 </script>

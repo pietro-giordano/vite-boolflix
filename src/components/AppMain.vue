@@ -38,7 +38,7 @@ export default {
                         </div>
 
                         <AppCard :content="movie" v-for="movie in store.moviesResults" />
-                        <AppCard :content="serie" v-for="serie in store.seriesResults" />
+                        <AppCard :content="tv" v-for="tv in store.seriesResults" />
                   </div>
             </div>
       </main>
@@ -74,7 +74,7 @@ main {
                   width: 50px;
                   height: 50px;
                   border-radius: 50%;
-                  background-color: rgba(255, 255, 255, 0.7);
+                  background-color: rgba(255, 255, 255, 0.8);
                   color: black;
                   position: absolute;
                   z-index: 2;
@@ -102,6 +102,10 @@ main {
                   margin-right: 30px;
                   white-space: pre-wrap;
 
+                  &:hover {
+                        border: 2px solid #D81F26;
+                  }
+
                   img {
                         width: 100%;
                         height: 100%;
@@ -119,10 +123,15 @@ main {
                         background-color: rgba($color: #000000, $alpha: 0.8);
                         width: 100%;
                         height: 100%;
-                        padding: 20% 10px;
+                        padding: 5px 10px;
 
                         p {
                               margin-bottom: 0;
+                        }
+
+                        button {
+                              background-color: #D81F26;
+                              color: white;
                         }
                   }
             }
