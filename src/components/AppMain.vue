@@ -74,7 +74,7 @@ main {
                   width: 50px;
                   height: 50px;
                   border-radius: 50%;
-                  background-color: rgba(255, 255, 255, 0.8);
+                  background-color: rgba(255, 255, 255, 0.7);
                   color: black;
                   position: absolute;
                   z-index: 2;
@@ -100,7 +100,7 @@ main {
                   border: 2px solid white;
                   display: inline-block;
                   margin-right: 30px;
-                  white-space: pre-wrap;
+                  white-space: normal;
                   // overflow: auto;
 
                   &:hover {
@@ -147,6 +147,8 @@ main {
                         button {
                               background-color: #D81F26;
                               color: white;
+                              cursor: pointer;
+                              width: 100px;
                         }
                   }
             }

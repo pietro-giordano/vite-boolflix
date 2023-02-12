@@ -40,8 +40,29 @@ export default {
             searchEvent() {
                   this.getDatabase('movie');
                   this.getDatabase('tv');
+                  this.getGenres('movie');
+                  this.getGenres('tv');
             },
-      }
+
+            getGenres(endpoint) {
+                  axios
+                        .get('https://api.themoviedb.org/3/genre/' + endpoint + '/list', {
+                              params: {
+                                    api_key: '36cc4da84d9ffde2d7f4c2ba9f8a6a4f',
+                                    language: 'it-IT'
+                              }
+                        })
+                        .then((response) => {
+                              if (endpoint == 'movie') {
+                                    this.store.genresMovies = response.data.genres;
+                                    console.log(this.store.genresMovies);
+                              } else {
+                                    this.store.genresSeries = response.data.genres;
+                                    console.log(this.store.genresSeries);
+                              }
+                        })
+            }
+      },
 }
 </script>
 

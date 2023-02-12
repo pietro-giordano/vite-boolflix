@@ -11,6 +11,7 @@ export default {
             return {
                   store,
                   credits: [],
+                  genres: [],
                   moreInfoVisibility: false,
                   buttonInfo: true
             }
@@ -34,7 +35,7 @@ export default {
 
             shortOverview() {
                   return this.content.overview.slice(0, 200) + '...';
-            }
+            },
       },
       methods: {
 
@@ -58,14 +59,35 @@ export default {
                         })
                         .then((response) => {
                               this.credits = response.data.cast.slice(0, 5);
-                              console.log(this.credits);
+                              // console.log(this.credits);
                         })
+            },
+
+            translateGenres() {
+                  this.store.genresMovies.forEach((genre) => {
+                        if (this.content.genre_ids.includes(genre.id)) {
+                              console.log(genre.id)
+                              if (!this.genres.includes(genre.name)) {
+                                    this.genres.push(genre.name);
+                                    console.log(this.genres)
+                              }
+                        }
+                  });
+                  this.store.genresSeries.forEach((genre) => {
+                        if (this.content.genre_ids.includes(genre.id)) {
+                              console.log(genre.id)
+                              if (!this.genres.includes(genre.name)) {
+                                    this.genres.push(genre.name);
+                                    console.log(this.genres)
+                              }
+                        }
+                  });
             },
 
             lessInfo() {
                   this.moreInfoVisibility = false;
                   this.buttonInfo = true;
-            }
+            },
       }
 }
 </script>
@@ -84,9 +106,10 @@ export default {
                         <font-awesome-icon v-for="n in starsEmpty" icon="fa-regular fa-star" />
                   </p>
                   <p>Overview: <span>{{ shortOverview }}</span></p>
-                  <button v-if="buttonInfo" @click="getCredits">More info...</button>
+                  <button v-if="buttonInfo" @click="getCredits(), translateGenres()">More info...</button>
                   <button v-if="moreInfoVisibility" @click="lessInfo">Less info...</button>
                   <div v-if="moreInfoVisibility">
+                        <p>Genere: <span v-for="genre in genres">"{{ genre }}" </span></p>
                         <p>Cast:</p>
                         <p v-for="actor in credits"><span>{{ actor.name }}</span></p>
                   </div>
